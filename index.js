@@ -1,9 +1,13 @@
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-// Rota principal renderiza a tabela formatada
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
+// Routes
 app.get("/", async (req, res) => {
     // Renderiza a tabela no HTML
     res.render("index");
@@ -15,7 +19,9 @@ app.get("/perguntar", async (req, res) => {
 });
 
 app.post("/salvarpergunta", async (req, res) => {
-  res.send("Formulario recebido!!");
+  var titulo = req.body.titulo;
+  var descricao = req.body.descricao;
+  res.send(`Formulario recebido!! <br>Titulo: ${titulo} <br>Descricao: ${descricao}`);
 });
 
 app.listen(3000, () => {
