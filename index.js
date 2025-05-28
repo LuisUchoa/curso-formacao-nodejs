@@ -14,6 +14,10 @@ app.get("/perguntar", async (req, res) => {
     res.render("perguntar");
 });
 
+app.post("/salvarpergunta", async (req, res) => {
+  res.send("Formulario recebido!!");
+});
+
 app.listen(3000, () => {
   console.log("App rodando em http://localhost:3000");
 });
