@@ -23,8 +23,15 @@ app.use(bodyParser.json());
 
 // Routes
 app.get("/", async (req, res) => {
-    // Renderiza a tabela no HTML
-    res.render("index");
+    // Busca todas as perguntas do banco de dados
+    Pergunta.findAll({raw: true, order: [['id', 'DESC']]}).then(perguntas => {
+        // Renderiza a tabela no HTML com as perguntas    
+        res.render("index", {
+            perguntas: perguntas
+        });
+    }).catch((error) => {
+        console.error("Erro ao buscar perguntas: ", error);
+});
 });
 
 app.get("/perguntar", async (req, res) => {
