@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const connection = require("./databse/database");
 // Importando o modelo Pergunta
 const Pergunta = require("./databse/Pergunta");
+const { where } = require("sequelize");
 
 // database
 connection
@@ -52,6 +53,20 @@ app.post("/salvarpergunta", async (req, res) => {
     console.error("Erro ao salvar pergunta: ", error);
     res.status(500).send("Erro ao salvar pergunta");
   });
+});
+
+app.get("/pergunta/:id",(req, res) => {
+  var id = req.params.id;
+  Pergunta.findOne({
+    where: {id: id}
+  }).then(pergunta => {
+    if (pergunta != undefined) {
+      res.render("pergunta", {
+      });
+    } else {
+      res.redirect("/");
+    }
+    });
 });
 
 app.listen(3000, () => {
