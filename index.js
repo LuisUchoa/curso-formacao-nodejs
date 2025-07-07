@@ -1,6 +1,20 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const connection = require("./databse/database");
+// Importando o modelo Pergunta
+const Pergunta = require("./databse/Pergunta");
+
+// database
+connection
+  .authenticate()
+  .then(() => {
+    console.log("Conexão feita com sucesso!");
+  })
+  .catch((error) => {
+    console.log("Erro ao conectar: " + error);
+  });
+
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
