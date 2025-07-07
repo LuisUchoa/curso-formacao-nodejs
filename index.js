@@ -35,7 +35,16 @@ app.get("/perguntar", async (req, res) => {
 app.post("/salvarpergunta", async (req, res) => {
   var titulo = req.body.titulo;
   var descricao = req.body.descricao;
-  res.send(`Formulario recebido!! <br>Titulo: ${titulo} <br>Descricao: ${descricao}`);
+  // Insere a pergunta no banco de dados
+  Pergunta.create({  
+    titulo: titulo,
+    descricao: descricao
+  }).then(() => {
+    res.redirect("/");
+  }).catch((error) => {
+    console.error("Erro ao salvar pergunta: ", error);
+    res.status(500).send("Erro ao salvar pergunta");
+  });
 });
 
 app.listen(3000, () => {

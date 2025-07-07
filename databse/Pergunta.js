@@ -18,3 +18,6 @@ Pergunta.sync({force: false}).then(() => {
 }).catch((error) => {
     console.error("Erro ao criar tabela: ", error);
 });
+
+// Exporta o modelo Pergunta
+module.exports = Pergunta;
