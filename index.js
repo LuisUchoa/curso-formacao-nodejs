@@ -60,14 +60,38 @@ app.get("/pergunta/:id",(req, res) => {
     where: {id: id}
   }).then(pergunta => {
     if (pergunta != undefined) {
-      res.render("pergunta", {
-        pergunta: pergunta
+      Resposta.findAll({
+        where: {perguntaId: pergunta.id},
+        order: [['id', 'DESC']]
+      }).then(respostas => {
+        res.render("pergunta", {
+          pergunta: pergunta,
+          respostas: respostas
+        });
+      }).catch((error) => {
+        console.error("Erro ao buscar respostas: ", error);
+        res.status(500).send("Erro ao buscar respostas");
       });
     } else {
       res.redirect("/");
     }
     });
 });
+
+app.post("/responder", (req, res) => {
+  var corpo = req.body.corpo;  
+  var perguntaId = req.body.pergunta;
+  Resposta.create({
+    corpo: corpo,
+    perguntaId: perguntaId
+  }).then(() => {
+    res.redirect("/pergunta/" + perguntaId);
+  }).catch((error) => {
+    console.error("Erro ao salvar resposta: ", error);
+    res.status(500).send("Erro ao salvar resposta");
+  });
+}
+);
 
 app.listen(3000, () => {
   console.log("App rodando em http://localhost:3000");
