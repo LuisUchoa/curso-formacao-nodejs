@@ -2,9 +2,8 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const connection = require("./databse/database");
-// Importando o modelo Pergunta
 const Pergunta = require("./databse/Pergunta");
-const { where } = require("sequelize");
+const Resposta = require("./databse/resposta");
 
 // database
 connection
